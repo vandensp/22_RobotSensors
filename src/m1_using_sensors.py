@@ -3,21 +3,21 @@ This module lets you practice the use of robot sensors.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Samuel VanDenburgh, (Partner: Valeria Paiz).
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
 import math
 
 # -----------------------------------------------------------------------------
-# TODO 2:  With your instructor, do quiz questions 1 through 5.
+# Done 2:  With your instructor, do quiz questions 1 through 5.
 #          After you understand the answers to those questions,
 #          mark this _TODO_ as DONE.
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-# TODO 3:  With your instructor, do quiz questions 6 through XXX.
+# Done 3:  With your instructor, do quiz questions 6 through XXX.
 #          After you understand the answers to those questions,
 #          mark this _TODO_ as DONE.
 # -----------------------------------------------------------------------------
@@ -25,15 +25,15 @@ import math
 def main():
     """ Calls the testing functions. """
     # Un-comment out these tests as you implement the methods they test.
-    # run_test_beep_and_tone()
-    # run_test_go_straight_for_seconds()
-    # run_test_go_straight_for_inches_using_time()
-    # run_test_go_straight_for_inches_using_sensor()
-    # run_test_raise_arm()
-    # run_test_lower_arm()
-    # run_test_go_straight_until_black()
-    # run_test_go_forward_until_distance_is_less_than()
-    # run_test_tones_until_touch_sensor_is_pressed()
+    run_test_beep_and_tone()
+    #run_test_go_straight_for_seconds()
+    #run_test_go_straight_for_inches_using_time()
+    #run_test_go_straight_for_inches_using_sensor()
+    #run_test_raise_arm()
+    #run_test_lower_arm()
+    #run_test_go_straight_until_black()
+    #run_test_go_forward_until_distance_is_less_than()
+    #run_test_tones_until_touch_sensor_is_pressed()
 
 
 def run_test_beep_and_tone():
@@ -43,7 +43,7 @@ def run_test_beep_and_tone():
        -- tone method of the ToneMaker class
     """
     # -------------------------------------------------------------------------
-    # TODO: 4.  Implement and test this method.
+    # Todo: 4.  Implement and test this method.
     # -------------------------------------------------------------------------
     # IMPORTANT:
     #   For testing the   beep   method,
@@ -57,10 +57,39 @@ def run_test_beep_and_tone():
     #   in increments of 10, with 50 millisecond durations.
     #   Do not forget to apply the   wait   method to tone, as usual.
     # -------------------------------------------------------------------------
+    #b = Beeper()
+    #for k in range(10):
+    #    b.beep().wait()
+    #    time.sleep(0.2)
+
+    t = ToneMaker()
+
+    "oh"
+    t.tone(92.4986, 0.2)
+    t.tone().wait()
+    time.sleep(0.2)
+
+    "oh"
+    t.tone(73.4162, 0.2)
+    t.tone().wait()
+    time.sleep(0.2)
+
+    "woah"
+    t.tone(55.0, 0.1)
+    t.tone().wait()
+
+    "oh"
+    t.tone(61.7354, 0.1)
+    t.tone().wait()
+    time.sleep(0.2)
+
+    "o"
+    t.tone(48.9994, 0.2)
+    t.tone().wait()
 
 
 # -----------------------------------------------------------------------------
-# TODO 5:  With your instructor, do quiz questions XXX through XXX.
+# Done 5:  With your instructor, do quiz questions XXX through XXX.
 #          After you understand the answers to those questions,
 #          mark this _TODO_ as DONE.
 # -----------------------------------------------------------------------------
@@ -96,7 +125,7 @@ def run_test_go_straight_for_seconds():
     beeper.beep()
     drive_system.go_straight_for_seconds(2.5, -50)
     # -------------------------------------------------------------------------
-    # TODO: 6.  Run the above tests.  Be sure to understand the
+    # Done: 6.  Run the above tests.  Be sure to understand the
     #              go_straight_for_seconds   method of   DriveSystem.
     # -------------------------------------------------------------------------
 
@@ -131,13 +160,13 @@ def run_test_go_straight_for_inches_using_time():
     beeper.beep()
     drive_system.go_straight_for_inches_using_time(12, -50)
     # -------------------------------------------------------------------------
-    # TODO: 7.  Run the above tests.  Be sure to understand the
+    # Do ne: 7.  Run the above tests.  Be sure to understand the
     #              go_straight_for_inches_using_time   method of   DriveSystem.
     # -------------------------------------------------------------------------
 
 
 # -----------------------------------------------------------------------------
-# TODO 8:  With your instructor, do quiz questions XXX through XXX.
+# Done 8:  With your instructor, do quiz questions XXX through XXX.
 #          After you understand the answers to those questions,
 #          mark this _TODO_ as DONE.
 # -----------------------------------------------------------------------------
@@ -173,14 +202,14 @@ def run_test_go_straight_for_inches_using_sensor():
     drive_system.go_straight_for_inches_using_sensor(12, -50)
 
     # -------------------------------------------------------------------------
-    # TODO: 9.  With your instructor, implement the
+    # Done: 9.  With your instructor, implement the
     #      go_straight_for_inches_using_sensor    method of   DriveSystem.
     #      The tests are already written for you -- READ THEM (above).
     # -------------------------------------------------------------------------
 
 
 # -----------------------------------------------------------------------------
-# TODO 10:  With your instructor, do quiz questions XXX through XXX.
+# Done 10:  With your instructor, do quiz questions XXX through XXX.
 #          After you understand the answers to those questions,
 #          mark this _TODO_ as DONE.
 # -----------------------------------------------------------------------------
@@ -355,7 +384,21 @@ class DriveSystem(object):
         self.go_straight_for_seconds(seconds, speed)
 
     def go_straight_for_inches_using_sensor(self, inches, speed):
-        pass
+        inches_per_degree = self.left_motor.WheelCircumference / 360
+
+        self.go(speed, speed)
+
+        left_wheel = self.left_motor
+        right_wheel = self.right_motor
+
+        self.left_motor.reset_position()
+        self.go(speed, speed)
+
+        while True:
+            traveled = abs(left_wheel.get_position()) * inches_per_degree
+            if traveled >= inches:
+                break
+        self.stop()
         # Live code this with students
 
     def go_straight_until_black(self, speed):
